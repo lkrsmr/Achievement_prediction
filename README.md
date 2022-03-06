@@ -1,0 +1,2 @@
+# Achievement_prediction
+通过MLP和LSTM分析大学生平日的各种行为信息是否与成绩有足够的影响
