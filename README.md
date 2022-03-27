@@ -19,7 +19,9 @@ CIDP学校三届学生数据，记录了每位同学的流量日志。
 |125011101     |2014-05-06 11:49:00        |2014-05-06 13:33:00      |110.63     |     
 |125011101     |2014-05-07 18:21:00        |2014-05-07 21:27:00      |243.89     |      
 |125011101     |2014-05-07 13:15:00        |2014-05-08 15:18:00      |181.97     | 
+
 每位同学当学期的各科成绩。原始的学生成绩数据记录了多项学生信息，包括姓名、年级、学号、课程号、课程名、课程成绩和学分等。
+
 |     xh    | term1 |term2 |term3 |term4 |term5 |term6 |term7 |
 |-----------|-------|------|------|------|------|------|------|
 |155011101  |82.46  |82.31 |81.77 |82.64 |78.7  |86.86	|86.57|
@@ -35,6 +37,7 @@ CIDP学校三届学生数据，记录了每位同学的流量日志。
 |-----------|-------|-------|-------|-------|-------|------|-----|
 |135011101	|48556.1|20171  |12139.1|5042.7 |404.6  |168.1 |1
 |135011102  |11174.3|12674  |2793.5 |3168.5 |93.1   |105.6 |1
+
 ID学号，T data对应该学生学期总上网流量（单位：MB，下同），T time对应该学生学期总上网时长，M表示月均，D代表日均，Grade代表成绩。
 
 ### 构建样本
@@ -54,7 +57,7 @@ ID学号，T data对应该学生学期总上网流量（单位：MB，下同）�
 ### 多层感知器神经网络模型算法
 
 MLP多层感知器（Multilayer Perceptron，MLP）是一种前向反馈结构的人工神经网络，最典型的多层感知器MLP的基本结构包括包括三层：输入层、隐层和输出层，如下图所示。当数据从输入层输入，其流向从输入层到各个隐层最后到输出层，一层接一层流入。其中隐层和输出层可分别实现对输入的非线性映射/线性分类，而这分工不同但其函数可以同时学习；MLP的不同层之间是全连接的，除了输入节点，每个节点都是一个带有非线性激活函数的神经元，上一层的任何一个神经元与下一层的所有神经元都有连接。所以在多层感知器的监督训练的在线学习中，常采用BP神经网络算法误差逆传播的特点来调整网络；MLP相邻层节点之间有权重与偏置，通过不断调节权重与偏置，最后达到预期的输出值。
-![Image text](https://raw.githubusercontent.com/lkrsmr/Achievement_prediction/img/productShow/3.png)
+![Image text](https://raw.githubusercontent.com/lkrsmr/Achievement_prediction/main/img/productShow/3.png)
 
 当输入层是n维向量时，就有n个神经元。
 而隐藏层的神经元，则根据输入层决定。由图3-1可知，输入层与隐藏层是全连接的。设用向量x表示输入层，则隐藏层的输出也就是$f(w^1 x+b^1)$。$w^1$是权重，$b^1$是偏置，函数f可以是常用的sigmoid函数或者tanh函数和relu函数等。
@@ -86,7 +89,7 @@ LSTM通过“三道门”，将长序列的训练过程保持弹性，忘掉“�
 
 输出误差被反向传播到网络参数以适应样本输出，本质上是一个优化的过程，并逐渐趋向于最优解。但是，每次参数更新中所使用的误差需要由一个参数来控制，这个参数就是学习率，也称为步长。
 为适应拟合样本的输出，输出误差被反向传播至网络参数，这就是优化的过程，实质上就是不断地呈往最优解的趋势。而学习率，可以作为一个参数以控制每次更新参数中的误差，这个误差会因为学习率的大小而受影响。前向反馈算法中学习率的公式：
-![Image text](https://raw.githubusercontent.com/lkrsmr/Achievement_prediction/img/productShow/GS1.png)
+![Image text](https://raw.githubusercontent.com/lkrsmr/Achievement_prediction/main/img/productShow/GS1.png)
 
 不难看出，当学习率越大时，参数受到输出误差的影响就越大，更新的就越快。所以受到异常数据的影响也就越大，整体呈发散状。而当一定轮数过后，学习率越小的时候，整体呈拟合状，收敛速度下降。当学习率过小时，就容易出现过拟合的问题。
 所以，最优异的学习率不会是一个固定值，而是一个随着训练次数衰减的变化的值。也就是在训练初期，学习率比较大，随着训练的进行，学习率不断减小，直到模型收敛。
@@ -108,7 +111,7 @@ optimizer选用ADAM优化器，loss选用categorical_crossentropy损失函数，
 由于本设计标签分类为多类模式，选用交叉熵损失函数（categorical_ crossentropy）最为合适。
 指标列表选用acc函数。如果在对上网特征的识别上对应成绩的准确率良好，则说明模型有效且效果不错，同时也说明大学生上网的流量和时长确实对他们的成绩具有显著的影响。
 最后对网络进行拟合，epochs（训练轮次）设置在60、将validation_split（验证集）比例设置在0.3时效果最佳，函数收敛幅度好。同时将shuffle函数设置为True，将训练的数据打乱，避免数据投入的顺序对网络训练造成影响。
-![Image text](https://raw.githubusercontent.com/lkrsmr/Achievement_prediction/img/productShow/GJ1.png)
+![Image text](https://raw.githubusercontent.com/lkrsmr/Achievement_prediction/main/img/productShow/GJ1.png)
 
 
 ### 构建LSTM神经网络模型
@@ -152,10 +155,10 @@ LSTM模型需要的数据为3D格式，为此，需要将数据集进行一次�
 MLP多层分感知器神经网络模型和LSTM长短期记忆人工神经网络模型分别搭建完成后，用处理好的数据进行对照设计。
 当使用标准样本时，两种神经网络的准确率曲线和loss值曲线如图所示。
 
-![Image text](https://raw.githubusercontent.com/lkrsmr/Achievement_prediction/img/productShow/LSTM1.png)
-![Image text](https://raw.githubusercontent.com/lkrsmr/Achievement_prediction/img/productShow/LSTM2.png)
-![Image text](https://raw.githubusercontent.com/lkrsmr/Achievement_prediction/img/productShow/MLP1.png)
-![Image text](https://raw.githubusercontent.com/lkrsmr/Achievement_prediction/img/productShow/MLP2.png)		
+![Image text](https://raw.githubusercontent.com/lkrsmr/Achievement_prediction/main/img/productShow/LSTM1.png)
+![Image text](https://raw.githubusercontent.com/lkrsmr/Achievement_prediction/main/img/productShow/LSTM2.png)
+![Image text](https://raw.githubusercontent.com/lkrsmr/Achievement_prediction/main/img/productShow/MLP1.png)
+![Image text](https://raw.githubusercontent.com/lkrsmr/Achievement_prediction/main/img/productShow/MLP2.png)		
 
 由以上的模型评估结果可以看出，两种神经网络模型结构均比较稳定，MLP的整体准确率非常高，达到了92%以上，同时损失函数也较稳定。训练次数到达10次时，测试集上的损失率到达最小值，仍可以调参来更拟合。
 
