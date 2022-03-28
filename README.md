@@ -88,7 +88,7 @@ MLP多层感知器（Multilayer Perceptron，MLP）是一种前向反馈结构�
 
 输入门则监控新神经元状态的信息哪些需要补充，也是sigmoid函数，取值范围为0~1之间，是与当前的神经元状态按位相乘。
 
-此处公式如下：     $C_t=f_t*C_(t-1)+i_t*C _t$   （2）
+此处公式如下：    $C_t=f_(t)*C_(t-1)+i_t*C ̃_t$   （2）
 
 输出门，最终的神经元状态加上tanh函数就是输出，也是一个sigmoid函数，取值为0~1，作用于输出，选择哪些信息可以输出。
 
@@ -122,16 +122,24 @@ Keras学习框架提供了LearningRateScheduler的函数，作为学习率适应
 
 输入数据时，使用sklearn框架中的train_test_split函数对数据集进行自动划分测试集和训练集，其中测试集的比例占20%。
 定义一个Sequential对象，然后用add按网络结构添加。
+
 搭建的MLP模型由三个全连接层链接。其中效果最好的为首层和隐层使用了ReLU激活函数，输出层则使用Softmax函数。
+
 ReLU激活函数是Rectified linear unit的简称，是如今使用率最高的激活函数。它的数学形式为$f(x)=max(0 ,1)$。当输入数值为正时，它的导数会一直为1而不衰减，因此缓解了梯度消失问题。当输入为负数时，它的导数为0。
+
 Sigmoid函数表达式为 $f(x)=1/(1+e^-x)$。
+
 Sigmoid激活函数效果比ReLU函数差上很多。使用Sigmoid函数，当神经元的值无限接近于1或者0时，在反向传播计算时梯度也几乎为0。这就出现了梯度弥散问题，易导致模型参数几乎失效。故采用ReLU激活函数效果更好。
+
 当输入层和隐含层选定ReLU激活函数时，在本设计中输出层选择了Softmax激活函数。Softmax用于多分类过程中，它将多个神经元的输出，映射到（0，1）区间内，从而来进行多分类。本模型的本质是在构建MLP神经网络模型进行分类类型设计，选用Softmax最为合适。
+
 在开始训练模型之前，需要通过compile函数来对学习过程进行编译配置。compile可以接收三个参数：①优化器optimizer；②损失函数loss；③指标列表metrics。
 optimizer选用ADAM优化器，loss选用categorical_crossentropy损失函数，指标列表选用acc函数。
 在ADAM优化器和SGD优化器（随机梯度下降法）的选择中，数据统计特征明显时，SGD的收敛效果好。本设计数据特征极其不明显，变化大，故优先采用“傻瓜算法”ADAM。
+
 由于本设计标签分类为多类模式，选用交叉熵损失函数（categorical_ crossentropy）最为合适。
 指标列表选用acc函数。如果在对上网特征的识别上对应成绩的准确率良好，则说明模型有效且效果不错，同时也说明大学生上网的流量和时长确实对他们的成绩具有显著的影响。
+
 最后对网络进行拟合，epochs（训练轮次）设置在60、将validation_split（验证集）比例设置在0.3时效果最佳，函数收敛幅度好。同时将shuffle函数设置为True，将训练的数据打乱，避免数据投入的顺序对网络训练造成影响。
 ![Image text](https://raw.githubusercontent.com/lkrsmr/Achievement_prediction/main/img/productShow/GJ1.png)
 
